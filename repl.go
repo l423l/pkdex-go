@@ -10,7 +10,11 @@ import (
 type cliCommand struct {
  name string
  description string
- callback func() error
+ callback func(*config) error
+}
+
+type config struct {
+ commands map[string]cliCommand
 }
 
 func cleanInput(text string) []string {
@@ -18,8 +22,6 @@ func cleanInput(text string) []string {
  splitText := strings.Fields(lowerCase)
  return splitText
 }
-
-var commands map[string]cliCommand
 
 func getCommands() map[string]cliCommand {
  return map[string]cliCommand{
@@ -36,8 +38,8 @@ func getCommands() map[string]cliCommand {
  }
 }
 
-func startRepl() {
- commands = getCommands()
+func startRepl(cfg *config) {
+
  scanner := bufio.NewScanner(os.Stdin)
 
  for {
@@ -49,11 +51,11 @@ func startRepl() {
 
   firstWord := words[0]
 
-  command, ok := commands[firstWord]
+  command, ok := cfg.commands[firstWord]
   if !ok {
     fmt.Print("Unknown command")
   } else {
-    err := command.callback()
+    err := command.callback(cfg)
     if err != nil {
       fmt.Print(err)
     }
