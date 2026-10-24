@@ -15,6 +15,8 @@ type cliCommand struct {
 
 type config struct {
  commands map[string]cliCommand
+ next *string
+ previous *string
 }
 
 func cleanInput(text string) []string {
@@ -34,6 +36,16 @@ func getCommands() map[string]cliCommand {
     name: "exit",
     description: "Exit the Pokedex",
     callback: commandExit,
+  },
+  "map": {
+    name: "map",
+    description: "Displays the locations",
+    callback: commandMap,
+  },
+  "mapb": {
+    name: "mapb",
+    description: "Displays the locations",
+    callback: commandMapb,
   },
  }
 }
