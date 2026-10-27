@@ -14,7 +14,7 @@ func fecthlocations(url string) (pokeapi.Locations, error) {
  return locations, nil
 }
 
-func commandMap(cfg *config) error {
+func commandMap(cfg *config, args ...string) error {
  next := ""
 
  if cfg.next != nil {
