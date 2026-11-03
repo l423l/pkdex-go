@@ -5,6 +5,7 @@ import (
  "bufio"
  "os"
  "fmt"
+ "pkdexcli/internal/pokeapi"
 )
 
 type cliCommand struct {
@@ -17,6 +18,7 @@ type config struct {
  commands map[string]cliCommand
  next *string
  previous *string
+ pokedex map[string]pokeapi.Pokemon
 }
 
 func cleanInput(text string) []string {
@@ -49,8 +51,13 @@ func getCommands() map[string]cliCommand {
   },
   "explore": {
     name: "explore",
-    description: "Gotta catch'em all",
+    description: "Gotta find'em all",
     callback: commandExplore,
+  },
+  "catch": {
+    name: "catch",
+    description: "Gotta catch'em all",
+    callback: commandCatch,
   },
  }
 }
